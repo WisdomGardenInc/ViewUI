@@ -1,5 +1,5 @@
 
-import {clearHours} from '../util';
+import {mergeHours} from '../util';
 
 export default {
     name: 'PanelTable',
@@ -44,7 +44,13 @@ export default {
             e.stopPropagation();
 
             if (cell.disabled || cell.type === 'weekLabel') return;
-            const newDate = new Date(clearHours(cell.date));
+            let newDate;
+
+            if (this.selectionMode === 'range') {
+                newDate = new Date(mergeHours(cell.date, this.rangeState.selecting ? this.value[1] : this.value[0]));
+            } else {
+                newDate = new Date(mergeHours(cell.date, this.value[0]));
+            }
 
             this.$emit('on-pick', newDate);
             this.$emit('on-pick-click');
