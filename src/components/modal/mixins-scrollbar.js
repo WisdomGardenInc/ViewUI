@@ -20,7 +20,10 @@ export default {
             }
         },
         checkMaskInVisible () {
-            let masks = document.getElementsByClassName('ivu-modal-mask') || [];
+            let ivuMasks = document.getElementsByClassName('ivu-modal-mask') || [];
+            let extraMasks = document.getElementsByClassName('reveal-modal-bg') || [];
+            let masks = Array.from(ivuMasks).concat(Array.from(extraMasks));
+
             return Array.from(masks).every(m => m.style.display === 'none' || m.classList.contains('fade-leave-to'));
         },
         setScrollBar () {
